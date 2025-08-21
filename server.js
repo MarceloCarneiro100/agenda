@@ -18,10 +18,14 @@ const path = require('path');
 const helmet = require('helmet');
 const csrf = require('csurf');
 
-const { checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware');
+const { checkCsrfError, csrfMiddleware, setContentSecurityPolicy } = require('./src/middlewares/middleware');
 const porta = 3000;
 
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false
+}));
+
+app.use(setContentSecurityPolicy);
 app.use(express.urlencoded({ extended: true }));
 
 // Definição do diretório para arquivos estáticos
@@ -29,7 +33,7 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 const sessionOptions = session({
   secret: 'palavra-secreta',
-  store: MongoStore.create({ mongoUrl: process.env.CONNECTIONSTRING}),
+  store: MongoStore.create({ mongoUrl: process.env.CONNECTIONSTRING }),
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -55,8 +59,8 @@ app.set('views', path.resolve(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs');
 
 app.on('pronto', () => {
-    app.listen(porta, () => {
-        console.log('Acessar http://localhost:3000');
-        console.log(`Aplicação rodando na porta ${porta}`);
-    });
+  app.listen(porta, () => {
+    console.log('Acessar http://localhost:3000');
+    console.log(`Aplicação rodando na porta ${porta}`);
+  });
 });

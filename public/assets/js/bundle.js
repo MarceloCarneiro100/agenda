@@ -25251,7 +25251,53 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, `.bi-lock-fill {
+    font-size: 2rem;
+}
+
+.titulo {
+    display: inline-block;
+}
+
+.content {
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;
+    padding: 30px;
+}
+
+.content .cadastro {
+   border-right: 1px solid rgba(0, 0, 0, 0.2);
+   padding-right: 30px;
+}
+
+.content .login {
+    padding-left: 30px;
+}
+
+@media screen and (max-width: 1400px) {
+    .content {
+        flex-direction: column;
+        padding-bottom: 15px;
+    }
+
+    .content input {
+        max-width: 500px;
+    }
+
+    .content .cadastro {
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .content .login {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}`, "",{"version":3,"sources":["webpack://./frontend/assets/css/style.css"],"names":[],"mappings":"AAAA;IACI,eAAe;AACnB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,aAAa;IACb,oCAAoC;IACpC,wDAAwD;IACxD,aAAa;AACjB;;AAEA;GACG,0CAA0C;GAC1C,mBAAmB;AACtB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI;QACI,sBAAsB;QACtB,oBAAoB;IACxB;;IAEA;QACI,gBAAgB;IACpB;;IAEA;QACI,YAAY;QACZ,2CAA2C;QAC3C,mBAAmB;QACnB,eAAe;QACf,gBAAgB;IACpB;;IAEA;QACI,eAAe;QACf,gBAAgB;IACpB;AACJ","sourcesContent":[".bi-lock-fill {\r\n    font-size: 2rem;\r\n}\r\n\r\n.titulo {\r\n    display: inline-block;\r\n}\r\n\r\n.content {\r\n    display: flex;\r\n    border: 1px solid rgba(0, 0, 0, 0.2);\r\n    box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;\r\n    padding: 30px;\r\n}\r\n\r\n.content .cadastro {\r\n   border-right: 1px solid rgba(0, 0, 0, 0.2);\r\n   padding-right: 30px;\r\n}\r\n\r\n.content .login {\r\n    padding-left: 30px;\r\n}\r\n\r\n@media screen and (max-width: 1400px) {\r\n    .content {\r\n        flex-direction: column;\r\n        padding-bottom: 15px;\r\n    }\r\n\r\n    .content input {\r\n        max-width: 500px;\r\n    }\r\n\r\n    .content .cadastro {\r\n        border: none;\r\n        border-bottom: 1px solid rgba(0, 0, 0, 0.2);\r\n        margin-bottom: 30px;\r\n        padding-left: 0;\r\n        padding-right: 0;\r\n    }\r\n\r\n    .content .login {\r\n        padding-left: 0;\r\n        padding-right: 0;\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
