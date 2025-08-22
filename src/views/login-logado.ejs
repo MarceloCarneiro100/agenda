@@ -1,0 +1,19 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1"></div>
+
+                <div class="col-lg-10 my-5">
+                    <div class="text-center">
+                        <h3 class="titulo">Olá, <%= user.email %>!</h3>
+                    </div>
+                    <p class="text-center lead">Você precisa sair para criar outra conta.</p>
+
+                    <%- include('includes/messages'); %>    
+                </div>
+
+                <div class="col-lg-1"></div>
+            </div>
+        </div>
+<%- include('includes/footer') %>

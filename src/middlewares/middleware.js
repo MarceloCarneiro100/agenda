@@ -1,6 +1,7 @@
 exports.middlewareGlobal = (req, res, next) => {
   res.locals.errors = req.flash('errors');
   res.locals.success = req.flash('success');
+  res.locals.user = req.session.user;
   next();
 };
 
@@ -23,6 +24,7 @@ exports.setContentSecurityPolicy = (req, res, next) => {
     "script-src-elem 'self' https://cdn.jsdelivr.net; " +
     "style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; " +
     "font-src 'self' https://cdn.jsdelivr.net; " +
+    "img-src 'self' data:; " + 
     "object-src 'none';"
   );
   next();

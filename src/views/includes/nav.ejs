@@ -1,12 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Agenda</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+      aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-        <li class="nav-item">
-            <a href="/login/index" class="nav-link"><i class="bi bi-person-fill"></i>
-Cadastro/Login</a>
-        </li>
+        <% if(user) { %>
+          <li class="nav-item">
+            <a href="/login/logout" class="nav-link"><i class="bi bi-box-arrow-right"></i>
+              Sair</a>
+          </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a href="/login/index" class="nav-link"><i class="bi bi-person-fill"></i>
+                Entrar</a>
+            </li>
+            <% } %>
       </ul>
     </div>
   </div>
