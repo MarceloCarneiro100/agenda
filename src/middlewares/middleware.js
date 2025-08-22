@@ -24,8 +24,17 @@ exports.setContentSecurityPolicy = (req, res, next) => {
     "script-src-elem 'self' https://cdn.jsdelivr.net; " +
     "style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; " +
     "font-src 'self' https://cdn.jsdelivr.net; " +
-    "img-src 'self' data:; " + 
+    "img-src 'self' data:; " +
     "object-src 'none';"
   );
+  next();
+};
+
+exports.loginRequired = (req, res, next) => {
+  if (!req.session.user) {
+    req.flash('errors', 'Você precisa fazer login.');
+    req.session.save(() => res.redirect('/'));
+    return;
+  }
   next();
 };
