@@ -122,6 +122,14 @@ var CadastroContato = /*#__PURE__*/function () {
         emailInput.insertAdjacentElement('afterend', _p2);
         error = true;
       }
+      if (telefoneInput.value.trim()) {
+        var telefoneValido = CadastroContato.validarTelefone(telefoneInput.value.trim());
+        if (!telefoneValido) {
+          var _p3 = CadastroContato.createErrorMessage('Telefone inválido. Use o formato (xx)xxxxx-xxxx ou (xx)xxxx-xxxx.');
+          telefoneInput.insertAdjacentElement('afterend', _p3);
+          error = true;
+        }
+      }
       if (!error) el.submit();
     }
   }], [{
@@ -132,6 +140,15 @@ var CadastroContato = /*#__PURE__*/function () {
       p.className = 'text-danger';
       p.style.fontWeight = '500';
       return p;
+    }
+  }, {
+    key: "validarTelefone",
+    value: function validarTelefone(telefone) {
+      // Remove espaços, parênteses, traços etc.
+      var limpo = telefone.replace(/\D/g, '');
+
+      // Valida se o número tem 10 (fixo) ou 11 (celular) dígitos, incluindo o DDD
+      return /^(\d{10}|\d{11})$/.test(limpo);
     }
   }]);
 }();

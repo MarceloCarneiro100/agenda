@@ -36,6 +36,11 @@ Contato.prototype.valida = function () {
     if (!this.body.email && !this.body.telefone) {
         this.errors.push('Pelo menos um contato precisa ser enviado: e-mail ou telefone.');
     }
+    
+    if (this.body.telefone && !/^\(\d{2}\)\d{4,5}-\d{4}$/.test(this.body.telefone)) {
+        this.errors.push('Telefone inválido. Use o formato (xx)xxxxx-xxxx ou (xx)xxxx-xxxx.');
+    }
+
 };
 
 Contato.prototype.cleanUp = function () {
