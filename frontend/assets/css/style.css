@@ -2,6 +2,11 @@
     font-size: 2rem;
 }
 
+.container td a {
+    text-decoration: none;
+    font-weight: 500;
+}
+
 .titulo {
     display: inline-block;
 }

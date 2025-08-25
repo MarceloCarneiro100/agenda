@@ -30,6 +30,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Definição do diretório para arquivos estáticos
 app.use(express.static(path.resolve(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'frontend')));
+
 
 const sessionOptions = session({
   secret: 'palavra-secreta',

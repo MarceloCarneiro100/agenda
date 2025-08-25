@@ -56,6 +56,12 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = function (req, res) {
-   req.session.destroy();
-   res.redirect('/');
+   req.session.destroy(err => {
+      if(err) {
+         console.log('Erro ao destruir a sessão:', err);
+         return res.render('404');
+      }
+      res.clearCookie('connect.sid'); 
+      return res.redirect('/login/index');
+   });
 };

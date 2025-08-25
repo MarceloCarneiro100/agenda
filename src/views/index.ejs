@@ -10,19 +10,36 @@
 
                     <%- include('includes/messages')%>
 
-                        <div class="responsive-table">
-                            <table class="table my-3">
-                                <tr>
-                                    <td>Fulano</td>
-                                    <td>De Tal</td>
-                                    <td>5345355435</td>
-                                    <td>fulano@email.com</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <% if(contatos.length> 0) { %>
+                            <div class="responsive-table">
+                                <table class="table my-3">
+                                    <% contatos.forEach(contato=> { %>
+                                        <tr>
+                                            <td><%= contato.nome %></td>
+                                            <td><%= contato.sobrenome %></td>
+                                            <td><%= contato.telefone %></td>
+                                            <td><%= contato.email %></td>
+                                            <td><a href="/contato/index/<%= contato._id %>"><i class="bi bi-pencil"></i> Editar</a></td>
+                                            <td>
+                                                 <a href="#" 
+                                                    class="text-danger" 
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#confirmDeleteModal"
+                                                    data-id="<%= contato._id %>">
+                                                    <i class="bi bi-trash"></i> Excluir
+                                                 </a>
+                                            </td>
+                                        </tr>   
+                                    <% }); %>
+                                </table>
+                            </div>
+                        <% } else { %>
+                            <p class="text-center lead">Não existem contatos na sua agenda.</p>
+                        <% } %>
                 </div>
 
                 <div class="col-lg-2"></div>
             </div>
         </div>
-        <%- include('includes/footer') %>
+<%- include('includes/modalDelete') %>
+<%- include('includes/footer') %>
