@@ -9,7 +9,7 @@ exports.index = (req, res) => {
 exports.register = async (req, res) => {
     try {
         const contato = new Contato(req.body);
-        await contato.register();
+        await contato.register(req.session.user._id);
 
         if (contato.errors.length > 0) {
             req.flash('errors', contato.errors);
@@ -31,7 +31,7 @@ exports.editIndex = async function (req, res) {
         if (!req.params.id) return res.render('404');
 
         const contato = await Contato.buscaPorId(req.params.id);
-        if (!contato) return res.render('404');
+        if (!contato || contato.userId.toString() !== req.session.user._id) return res.render('404');
 
         res.render('contato', { contato });
     } catch (e) {
@@ -43,6 +43,13 @@ exports.editIndex = async function (req, res) {
 exports.edit = async function (req, res) {
     try {
         if (!req.params.id) return res.render('404');
+
+        const contatoOriginal = await Contato.buscaPorId(req.params.id);
+
+        if (!contatoOriginal || contatoOriginal.userId.toString() !== req.session.user._id) {
+            return res.render('404');
+        }
+
         const contato = new Contato(req.body);
         await contato.edit(req.params.id);
 
@@ -64,6 +71,13 @@ exports.edit = async function (req, res) {
 exports.delete = async function (req, res) {
     try {
         if (!req.params.id) return res.render('404');
+
+        const contatoOriginal = await Contato.buscaPorId(req.params.id);
+
+        if (!contatoOriginal || contatoOriginal.userId.toString() !== req.session.user._id) {
+            return res.render('404');
+        }
+
         const contato = await Contato.delete(req.params.id);
         if (!contato) return res.render('404');
 

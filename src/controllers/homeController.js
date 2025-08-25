@@ -1,6 +1,6 @@
 const Contato = require('../models/ContatoModel');
 
 exports.index = async (req, res) => {
-    const contatos = await Contato.buscaContatos();
+    const contatos = await Contato.buscaContatosPorUsuario(req.session.user._id);
     res.render('index', { contatos });
 };
