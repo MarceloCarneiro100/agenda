@@ -1,17 +1,29 @@
 <%- include('includes/head') %>
-    <%- include('includes/nav') %>
+<%- include('includes/nav') %>
         <div class="container">
             <div class="row">
                 <div class="col-lg-2"></div>
 
                 <div class="col-lg-8 my-3">
                     <h1 class="text-center">Agenda</h1>
+                    <p class="text-center mt-5">Buscar por nome, sobrenome, email ou telefone.</p>
+                    <form id="formBusca" action="/contato/busca" method="GET" class="d-flex justify-content-center align-items-center mb-4">
+                        <input type="text" name="q" id="campoBusca" class="form-control w-50 me-2" autocomplete="off" />
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                    </form>
+
                     <p class="text-center lead">Seus contatos estão abaixo</p>
 
                     <%- include('includes/messages')%>
 
-                        <% if(contatos.length> 0) { %>
+                        <% if(contatos.length > 0) { %>
                             <div class="responsive-table">
+                                <div class="text-end mt-3">
+                                    Total de contatos:
+                                    <span class="badge bg-primary">
+                                        <%= totalContatos %>
+                                    </span>
+                                </div>
                                 <table class="table my-3">
                                     <% contatos.forEach(contato=> { %>
                                         <tr>
@@ -21,25 +33,18 @@
                                             <td><%= contato.email %></td>
                                             <td><a href="/contato/index/<%= contato._id %>"><i class="bi bi-pencil"></i> Editar</a></td>
                                             <td>
-                                                 <a href="#" 
-                                                    class="text-danger" 
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#confirmDeleteModal"
-                                                    data-id="<%= contato._id %>">
-                                                    <i class="bi bi-trash"></i> Excluir
-                                                 </a>
+                                                <a href="#" class="text-danger"         data-bs-toggle="modal"
+                                                data-bs-target="#confirmDeleteModal" data-id="<%= contato._id %>">
+                                                <i class="bi bi-trash"></i> Excluir
+                                                </a>
                                             </td>
-                                        </tr>   
-                                    <% }); %>
+                                        </tr>
+                                        <% }); %>
                                 </table>
-                                <div class="text-end mt-3">
-                                     Total de contatos:
-                                    <span class="badge bg-primary"><%= totalContatos %></span>
-                                </div>
                             </div>
-                        <% } else { %>
-                            <p class="text-center lead">Não existem contatos na sua agenda.</p>
-                        <% } %>
+                            <% } else { %>
+                                <p class="text-center lead">Não existem contatos na sua agenda.</p>
+                            <% } %>
                 </div>
 
                 <div class="col-lg-2"></div>

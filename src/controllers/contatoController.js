@@ -89,3 +89,14 @@ exports.delete = async function (req, res) {
         return res.render('404');
     }
 };
+
+exports.busca = async (req, res) => {
+    const termo = req.query.q;
+    const userId = req.session.user._id;
+
+    const contatos = await Contato.buscaPorTermo(termo, userId);
+    res.render('index', {
+        contatos,
+        totalContatos: contatos.length
+    });
+};

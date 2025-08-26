@@ -6,6 +6,7 @@ const ContatoSchema = new mongoose.Schema({
     sobrenome: { type: String, required: false, default: '' },
     email: { type: String, required: false, default: '' },
     telefone: { type: String, required: false, default: '' },
+    telefoneLimpo: { type: String, required: false, default: '' },
     criadoEm: { type: Date, default: Date.now },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Login', required: true }
 });
@@ -36,7 +37,7 @@ Contato.prototype.valida = function () {
     if (!this.body.email && !this.body.telefone) {
         this.errors.push('Pelo menos um contato precisa ser enviado: e-mail ou telefone.');
     }
-    
+
     if (this.body.telefone && !/^\(\d{2}\)\d{4,5}-\d{4}$/.test(this.body.telefone)) {
         this.errors.push('Telefone inválido. Use o formato (xx)xxxxx-xxxx ou (xx)xxxx-xxxx.');
     }
@@ -50,11 +51,14 @@ Contato.prototype.cleanUp = function () {
         }
     }
 
+    const telefoneLimpo = this.body.telefone.replace(/\D/g, '');
+
     this.body = {
         nome: this.body.nome,
         sobrenome: this.body.sobrenome,
         email: this.body.email,
         telefone: this.body.telefone,
+        telefoneLimpo: telefoneLimpo
     };
 };
 
@@ -82,5 +86,24 @@ Contato.delete = async function (id) {
     const contato = await ContatoModel.findOneAndDelete({ _id: id });
     return contato;
 };
+
+Contato.buscaPorTermo = async function (termo, userId) {
+    if (typeof termo !== 'string') return [];
+
+    const regex = new RegExp(termo, 'i');
+    const termoNumerico = termo.replace(/\D/g, '');
+
+    return await ContatoModel.find({
+        userId,
+        $or: [
+            { nome: regex },
+            { sobrenome: regex },
+            { email: regex },
+            { telefone: regex },
+            { telefoneLimpo: termoNumerico }
+        ]
+    });
+};
+
 
 module.exports = Contato;
