@@ -8,7 +8,7 @@
                     <h1 class="text-center">Agenda</h1>
                     <p class="text-center mt-5">Buscar por nome, sobrenome, email ou telefone.</p>
                     <form id="formBusca" action="/contato/busca" method="GET" class="d-flex justify-content-center align-items-center mb-4">
-                        <input type="text" name="q" id="campoBusca" class="form-control w-50 me-2" autocomplete="off" />
+                        <input type="text" name="q" id="campoBusca" class="form-control w-50 me-2"autocomplete="off">
                         <button type="submit" class="btn btn-primary">Buscar</button>
                     </form>
 
@@ -18,12 +18,28 @@
 
                         <% if(contatos.length > 0) { %>
                             <div class="responsive-table">
-                                <div class="text-end mt-3">
-                                    Total de contatos:
-                                    <span class="badge bg-primary">
-                                        <%= totalContatos %>
-                                    </span>
+                                <div class="d-flex justify-content-between align-items-center mt-3 contato-actions">
+                                    <div class="total-contatos">
+                                        Total de contatos:
+                                        <span class="badge bg-primary">
+                                            <%= totalContatos %>
+                                        </span>
+                                    </div>
+                                    <form method="GET" action="/contato/busca"
+                                        class="d-flex justify-content-end align-items-center gap-2">
+                                        <input type="hidden" name="q" value="<%= termo %>">
+
+                                        <select name="ordem" class="form-select w-auto" style="min-width: 150px;">
+                                            <option value="asc" <%= ordem === 'asc' ? 'selected' : '' %>>A → Z</option>
+                                            <option value="desc" <%= ordem === 'desc' ? 'selected' : '' %>>Z → A</option>
+                                        </select>
+
+                                        <button type="submit" class="btn btn-primary" style="min-width: 150px;">
+                                            Ordenar
+                                        </button>
+                                    </form>
                                 </div>
+
                                 <table class="table my-3">
                                     <% contatos.forEach(contato=> { %>
                                         <tr>
@@ -31,9 +47,10 @@
                                             <td><%= contato.sobrenome %></td>
                                             <td><%= contato.telefone %></td>
                                             <td><%= contato.email %></td>
-                                            <td><a href="/contato/index/<%= contato._id %>"><i class="bi bi-pencil"></i> Editar</a></td>
+                                            <td><a href="/contato/index/<%= contato._id %>"><i class="bi bi-pencil"></i>
+                                                    Editar</a></td>
                                             <td>
-                                                <a href="#" class="text-danger"         data-bs-toggle="modal"
+                                                <a href="#" class="text-danger" data-bs-toggle="modal"
                                                 data-bs-target="#confirmDeleteModal" data-id="<%= contato._id %>">
                                                 <i class="bi bi-trash"></i> Excluir
                                                 </a>

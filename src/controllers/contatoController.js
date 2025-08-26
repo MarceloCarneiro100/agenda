@@ -91,12 +91,24 @@ exports.delete = async function (req, res) {
 };
 
 exports.busca = async (req, res) => {
-    const termo = req.query.q;
+    const termo = req.query.q || '';
     const userId = req.session.user._id;
+    const ordem = req.query.ordem || 'asc';
 
     const contatos = await Contato.buscaPorTermo(termo, userId);
+
+    contatos.sort((a, b) => {
+        const nomeA = a.nome || '';
+        const nomeB = b.nome || '';
+        return ordem === 'asc'
+            ? nomeA.localeCompare(nomeB)
+            : nomeB.localeCompare(nomeA);
+    });
+
     res.render('index', {
         contatos,
-        totalContatos: contatos.length
+        totalContatos: contatos.length,
+        ordem,
+        termo
     });
 };
