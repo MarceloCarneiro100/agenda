@@ -87,23 +87,62 @@ Contato.delete = async function (id) {
     return contato;
 };
 
-Contato.buscaPorTermo = async function (termo, userId) {
-    if (typeof termo !== 'string') return [];
+Contato.buscaPorTermo = async function (termo, userId, ordem = 'asc', skip = 0, limite = 10) {
+    let query = { userId };
 
-    const regex = new RegExp(termo, 'i');
-    const termoNumerico = termo.replace(/\D/g, '');
+    if (typeof termo === 'string' && termo.trim() !== '') {
+        const regex = new RegExp(termo.trim(), 'i');
+        const termoNumerico = termo.replace(/\D/g, '');
 
-    return await ContatoModel.find({
-        userId,
-        $or: [
-            { nome: regex },
-            { sobrenome: regex },
-            { email: regex },
-            { telefone: regex },
-            { telefoneLimpo: termoNumerico }
-        ]
-    });
+        query = {
+            userId,
+            $or: [
+                { nome: regex },
+                { sobrenome: regex },
+                { email: regex },
+                { telefone: regex },
+                { telefoneLimpo: termoNumerico }
+            ]
+        };
+    }
+
+    return await ContatoModel.find(query)
+        .sort({ nome: ordem === 'asc' ? 1 : -1 })
+        .skip(skip)
+        .limit(limite);
 };
 
+Contato.buscaPaginadaPorUsuario = async function (userId, ordem = 'asc', skip = 0, limite = 10) {
+    return await ContatoModel.find({ userId })
+        .sort({ nome: ordem === 'asc' ? 1 : -1 })
+        .skip(skip)
+        .limit(limite);
+};
+
+Contato.contatosPorUsuario = async function (userId) {
+    return await ContatoModel.countDocuments({ userId });
+};
+
+Contato.contarPorTermo = async function (termo, userId) {
+    let query = { userId };
+
+    if (typeof termo === 'string' && termo.trim() !== '') {
+        const regex = new RegExp(termo.trim(), 'i');
+        const termoNumerico = termo.replace(/\D/g, '');
+
+        query = {
+            userId,
+            $or: [
+                { nome: regex },
+                { sobrenome: regex },
+                { email: regex },
+                { telefone: regex },
+                { telefoneLimpo: termoNumerico }
+            ]
+        };
+    }
+
+    return await ContatoModel.countDocuments(query);
+};
 
 module.exports = Contato;

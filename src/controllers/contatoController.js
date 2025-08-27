@@ -94,9 +94,17 @@ exports.busca = async (req, res) => {
     const termo = req.query.q || '';
     const userId = req.session.user._id;
     const ordem = req.query.ordem || 'asc';
+    const limite = parseInt(req.query.limite) || 5;
+    const pagina = parseInt(req.query.pagina) || 1;
+    const skip = (pagina - 1) * limite;
 
-    const contatos = await Contato.buscaPorTermo(termo, userId);
+    // Busca os contatos paginados
+    const contatos = await Contato.buscaPorTermo(termo, userId, ordem, skip, limite);
 
+    // Conta o total de contatos que batem com o termo (sem paginação)
+    const totalContatos = await Contato.contarPorTermo(termo, userId);
+
+    // Ordena os contatos da página atual (se necessário)
     contatos.sort((a, b) => {
         const nomeA = a.nome || '';
         const nomeB = b.nome || '';
@@ -105,10 +113,18 @@ exports.busca = async (req, res) => {
             : nomeB.localeCompare(nomeA);
     });
 
+    // Calcula o total de páginas
+    const totalPaginas = Math.ceil(totalContatos / limite);
+
+    // Renderiza a view com os dados corretos
     res.render('index', {
         contatos,
-        totalContatos: contatos.length,
+        totalContatos,
         ordem,
-        termo
+        termo,
+        limite,
+        paginaAtual: pagina,
+        totalPaginas
     });
 };
+

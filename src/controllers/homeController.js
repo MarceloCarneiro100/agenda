@@ -1,23 +1,24 @@
 const Contato = require('../models/ContatoModel');
 
 exports.index = async (req, res) => {
+    const paginaAtual = Number(req.query.pagina) || 1;
+    const limitePorPagina = Number(req.query.limite) || 5;
     const ordem = req.query.ordem || 'asc';
-    const contatos = await Contato.buscaContatosPorUsuario(req.session.user._id);
+    const userId = req.session.user._id;
 
-    contatos.sort((a, b) => {
-        return ordem === 'asc'
-            ? a.nome.localeCompare(b.nome)
-            : b.nome.localeCompare(a.nome)
-    });
+    const skip = (paginaAtual - 1) * limitePorPagina;
 
-    const totalContatos = contatos.length;
-
-    const termo = '';
+    const contatos = await Contato.buscaPaginadaPorUsuario(userId, ordem, skip, limitePorPagina);
+    const totalContatos = await Contato.contatosPorUsuario(userId);
+    const totalPaginas = Math.ceil(totalContatos / limitePorPagina);
 
     res.render('index', {
         contatos,
+        paginaAtual,
+        totalPaginas,
         totalContatos,
         ordem,
-        termo
+        limite: limitePorPagina,
+        termo: ''
     });
 };

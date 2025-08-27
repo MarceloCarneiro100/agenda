@@ -8,60 +8,123 @@
                     <h1 class="text-center">Agenda</h1>
                     <p class="text-center mt-5">Buscar por nome, sobrenome, email ou telefone.</p>
                     <form id="formBusca" action="/contato/busca" method="GET" class="d-flex justify-content-center align-items-center mb-4">
-                        <input type="text" name="q" id="campoBusca" class="form-control w-50 me-2"autocomplete="off">
+                        <input type="text" name="q" id="campoBusca" class="form-control w-50 me-2" autocomplete="off">
                         <button type="submit" class="btn btn-primary">Buscar</button>
                     </form>
+                    <div class="d-flex justify-content-center mb-4">
+                        <a href="/" class="btn btn-outline-secondary ms-3">
+                            Ver todos os contatos
+                        </a>
+                    </div>
 
                     <p class="text-center lead">Seus contatos estão abaixo</p>
 
                     <%- include('includes/messages')%>
 
                         <% if(contatos.length > 0) { %>
-                            <div class="responsive-table">
-                                <div class="d-flex justify-content-between align-items-center mt-3 contato-actions">
-                                    <div class="total-contatos">
-                                        Total de contatos:
-                                        <span class="badge bg-primary">
-                                            <%= totalContatos %>
-                                        </span>
+                            <div class="responsive-table table-wrapper">
+                                <div class="d-flex justify-content-end align-items-center mt-3 contato-actions">
+
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 contato-actions">
+                                        <form method="GET" action="/contato/busca" class="d-flex flex-wrap gap-3 w-100">
+                                            <input type="hidden" name="q" value="<%= termo %>">
+
+                                            <div class="d-flex flex-column">
+                                                <label for="ordem">Ordenar:</label>
+                                                <select 
+                                                    name="ordem" 
+                                                    id="ordem" 
+                                                    class="form-select w-auto">
+                                                    <option value="asc" <%= ordem ==='asc' ? 'selected' : '' %>>A → Z
+                                                    </option>
+                                                    <option value="desc" <%= ordem ==='desc' ? 'selected' : '' %>>Z → A
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="d-flex flex-column">
+                                                <label for="limite">Contatos por página:</label>
+                                                <select name="limite" id="limite" class="form-select w-auto">
+                                                    <option value="5" <%=limite==5 ? 'selected' : '' %>>5</option>
+                                                    <option value="10" <%=limite==10 ? 'selected' : '' %>>10</option>
+                                                    <option value="15" <%=limite==15 ? 'selected' : '' %>>15</option>
+                                                    <option value="20" <%=limite==20 ? 'selected' : '' %>>20</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="d-flex align-items-end">
+                                                <button type="submit" class="btn btn-primary">Aplicar</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <form method="GET" action="/contato/busca"
-                                        class="d-flex justify-content-end align-items-center gap-2">
-                                        <input type="hidden" name="q" value="<%= termo %>">
-
-                                        <select name="ordem" class="form-select w-auto" style="min-width: 150px;">
-                                            <option value="asc" <%= ordem === 'asc' ? 'selected' : '' %>>A → Z</option>
-                                            <option value="desc" <%= ordem === 'desc' ? 'selected' : '' %>>Z → A</option>
-                                        </select>
-
-                                        <button type="submit" class="btn btn-primary" style="min-width: 150px;">
-                                            Ordenar
-                                        </button>
-                                    </form>
                                 </div>
 
-                                <table class="table my-3">
+                                <table class="table my-3 tabela">
                                     <% contatos.forEach(contato=> { %>
                                         <tr>
                                             <td><%= contato.nome %></td>
                                             <td><%= contato.sobrenome %></td>
-                                            <td><%= contato.telefone %></td>
+                                            <td class="text-nowrap"><%= contato.telefone %></td>
                                             <td><%= contato.email %></td>
-                                            <td><a href="/contato/index/<%= contato._id %>"><i class="bi bi-pencil"></i>
-                                                    Editar</a></td>
-                                            <td>
-                                                <a href="#" class="text-danger" data-bs-toggle="modal"
-                                                data-bs-target="#confirmDeleteModal" data-id="<%= contato._id %>">
-                                                <i class="bi bi-trash"></i> Excluir
+                                            <td class="text-nowrap">
+                                                <a href="/contato/index/<%= contato._id %>">
+                                                    <i class="bi bi-pencil"></i> 
+                                                    Editar
+                                                </a>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <a 
+                                                    href="#" class="text-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#confirmDeleteModal" data-id="<%= contato._id %>">
+                                                    <i class="bi bi-trash"></i> 
+                                                    Excluir
                                                 </a>
                                             </td>
                                         </tr>
                                         <% }); %>
                                 </table>
+
+                                <nav aria-label="Navegação de página" class="navegacao">
+                                    <ul class="pagination justify-content-center">
+                                        
+                                        <li class="page-item <%= paginaAtual === 1 ? 'disabled' : '' %>">
+                                          <a class="page-link" href="?pagina=1">Primeiro</a>
+                                        </li>
+
+                                        <li class="page-item <%= paginaAtual === 1 ? 'disabled' : '' %>">
+                                            <a class="page-link" href="?pagina=<%= paginaAtual - 1 %>&q=<%= termo %>&ordem=<%= ordem %>&limite=<%= limite %>">Anterior
+                                            </a>
+                                        </li>
+
+                                        <% for (let i=1; i <=totalPaginas; i++) { %>
+                                            <li class="page-item <%= paginaAtual === i ? 'active' : '' %>">
+                                                <a class="page-link" href="?pagina=<%= i %>&q=<%= termo %>&ordem=<%= ordem %>&limite=<%= limite %>">
+                                                    <%= i %>
+                                                </a>
+                                            </li>
+                                        <% } %>
+
+                                            <li class="page-item <%= paginaAtual === totalPaginas ? 'disabled' : '' %>">
+                                                <a class="page-link" href="?pagina=<%= paginaAtual + 1 %>&q=<%= termo %>&ordem=<%= ordem %>&limite=<%= limite %>">Próxima
+                                                </a>
+                                            </li>
+
+                                            <li class="page-item <%= paginaAtual === totalPaginas ? 'disabled' : '' %>">
+                                               <a class="page-link" href="?pagina=<%= totalPaginas %>">Último</a>
+                                            </li>
+                                    </ul>
+                                </nav>
+
+                                <div class="total-contatos text-end mb-4">
+                                    Total de contatos:
+                                    <span class="badge bg-primary">
+                                        <%= totalContatos %>
+                                    </span>
+                                </div>
                             </div>
-                            <% } else { %>
-                                <p class="text-center lead">Não existem contatos na sua agenda.</p>
-                            <% } %>
+                        <% } else { %>
+                            <p class="text-center lead">Não existem contatos na sua agenda.</p>
+                        <% } %>
                 </div>
 
                 <div class="col-lg-2"></div>

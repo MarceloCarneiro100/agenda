@@ -36,6 +36,16 @@
     padding-left: 30px;
 }
 
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.table-wrapper .tabela,
+.navegacao,
+.total-contatos {
+    min-width: 600px;
+}
 
 @media screen and (max-width: 1400px) {
     .content {
@@ -61,9 +71,10 @@
     }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 770px) {
     .contato-actions {
         flex-direction: column;
+        justify-content: center;
     }
 
     .contato-actions .total-contatos {

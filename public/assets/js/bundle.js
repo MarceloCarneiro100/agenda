@@ -25470,6 +25470,16 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.alert-js {
     padding-left: 30px;
 }
 
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.table-wrapper .tabela,
+.navegacao,
+.total-contatos {
+    min-width: 600px;
+}
 
 @media screen and (max-width: 1400px) {
     .content {
@@ -25495,15 +25505,16 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.alert-js {
     }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 770px) {
     .contato-actions {
         flex-direction: column;
+        justify-content: center;
     }
 
     .contato-actions .total-contatos {
         margin-bottom: 10px;
     }
-}`, "",{"version":3,"sources":["webpack://./frontend/assets/css/style.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,cAAc;IACd,aAAa;IACb,yBAAyB;IACzB,kBAAkB;IAClB,uBAAuB;AAC3B;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,qBAAqB;IACrB,gBAAgB;AACpB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,aAAa;IACb,oCAAoC;IACpC,wDAAwD;IACxD,aAAa;AACjB;;AAEA;IACI,0CAA0C;IAC1C,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;;AAGA;IACI;QACI,sBAAsB;QACtB,oBAAoB;IACxB;;IAEA;QACI,gBAAgB;IACpB;;IAEA;QACI,YAAY;QACZ,2CAA2C;QAC3C,mBAAmB;QACnB,eAAe;QACf,gBAAgB;IACpB;;IAEA;QACI,eAAe;QACf,gBAAgB;IACpB;AACJ;;AAEA;IACI;QACI,sBAAsB;IAC1B;;IAEA;QACI,mBAAmB;IACvB;AACJ","sourcesContent":[".alert-js {\r\n    background-color: #fff3cd;\r\n    color: #856404;\r\n    padding: 15px;\r\n    border: 1px solid #ffeeba;\r\n    text-align: center;\r\n    font-family: sans-serif;\r\n}\r\n\r\n.bi-lock-fill {\r\n    font-size: 2rem;\r\n}\r\n\r\n.container td a {\r\n    text-decoration: none;\r\n    font-weight: 500;\r\n}\r\n\r\n.titulo {\r\n    display: inline-block;\r\n}\r\n\r\n.content {\r\n    display: flex;\r\n    border: 1px solid rgba(0, 0, 0, 0.2);\r\n    box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;\r\n    padding: 30px;\r\n}\r\n\r\n.content .cadastro {\r\n    border-right: 1px solid rgba(0, 0, 0, 0.2);\r\n    padding-right: 30px;\r\n}\r\n\r\n.content .login {\r\n    padding-left: 30px;\r\n}\r\n\r\n\r\n@media screen and (max-width: 1400px) {\r\n    .content {\r\n        flex-direction: column;\r\n        padding-bottom: 15px;\r\n    }\r\n\r\n    .content input {\r\n        max-width: 500px;\r\n    }\r\n\r\n    .content .cadastro {\r\n        border: none;\r\n        border-bottom: 1px solid rgba(0, 0, 0, 0.2);\r\n        margin-bottom: 30px;\r\n        padding-left: 0;\r\n        padding-right: 0;\r\n    }\r\n\r\n    .content .login {\r\n        padding-left: 0;\r\n        padding-right: 0;\r\n    }\r\n}\r\n\r\n@media screen and (max-width: 700px) {\r\n    .contato-actions {\r\n        flex-direction: column;\r\n    }\r\n\r\n    .contato-actions .total-contatos {\r\n        margin-bottom: 10px;\r\n    }\r\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./frontend/assets/css/style.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,cAAc;IACd,aAAa;IACb,yBAAyB;IACzB,kBAAkB;IAClB,uBAAuB;AAC3B;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,qBAAqB;IACrB,gBAAgB;AACpB;;AAEA;IACI,qBAAqB;AACzB;;AAEA;IACI,aAAa;IACb,oCAAoC;IACpC,wDAAwD;IACxD,aAAa;AACjB;;AAEA;IACI,0CAA0C;IAC1C,mBAAmB;AACvB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,gBAAgB;IAChB,WAAW;AACf;;AAEA;;;IAGI,gBAAgB;AACpB;;AAEA;IACI;QACI,sBAAsB;QACtB,oBAAoB;IACxB;;IAEA;QACI,gBAAgB;IACpB;;IAEA;QACI,YAAY;QACZ,2CAA2C;QAC3C,mBAAmB;QACnB,eAAe;QACf,gBAAgB;IACpB;;IAEA;QACI,eAAe;QACf,gBAAgB;IACpB;AACJ;;AAEA;IACI;QACI,sBAAsB;QACtB,uBAAuB;IAC3B;;IAEA;QACI,mBAAmB;IACvB;AACJ","sourcesContent":[".alert-js {\r\n    background-color: #fff3cd;\r\n    color: #856404;\r\n    padding: 15px;\r\n    border: 1px solid #ffeeba;\r\n    text-align: center;\r\n    font-family: sans-serif;\r\n}\r\n\r\n.bi-lock-fill {\r\n    font-size: 2rem;\r\n}\r\n\r\n.container td a {\r\n    text-decoration: none;\r\n    font-weight: 500;\r\n}\r\n\r\n.titulo {\r\n    display: inline-block;\r\n}\r\n\r\n.content {\r\n    display: flex;\r\n    border: 1px solid rgba(0, 0, 0, 0.2);\r\n    box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff;\r\n    padding: 30px;\r\n}\r\n\r\n.content .cadastro {\r\n    border-right: 1px solid rgba(0, 0, 0, 0.2);\r\n    padding-right: 30px;\r\n}\r\n\r\n.content .login {\r\n    padding-left: 30px;\r\n}\r\n\r\n.table-wrapper {\r\n    overflow-x: auto;\r\n    width: 100%;\r\n}\r\n\r\n.table-wrapper .tabela,\r\n.navegacao,\r\n.total-contatos {\r\n    min-width: 600px;\r\n}\r\n\r\n@media screen and (max-width: 1400px) {\r\n    .content {\r\n        flex-direction: column;\r\n        padding-bottom: 15px;\r\n    }\r\n\r\n    .content input {\r\n        max-width: 500px;\r\n    }\r\n\r\n    .content .cadastro {\r\n        border: none;\r\n        border-bottom: 1px solid rgba(0, 0, 0, 0.2);\r\n        margin-bottom: 30px;\r\n        padding-left: 0;\r\n        padding-right: 0;\r\n    }\r\n\r\n    .content .login {\r\n        padding-left: 0;\r\n        padding-right: 0;\r\n    }\r\n}\r\n\r\n@media screen and (max-width: 770px) {\r\n    .contato-actions {\r\n        flex-direction: column;\r\n        justify-content: center;\r\n    }\r\n\r\n    .contato-actions .total-contatos {\r\n        margin-bottom: 10px;\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
