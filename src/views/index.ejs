@@ -88,7 +88,7 @@
                                     <ul class="pagination justify-content-center">
                                         
                                         <li class="page-item <%= paginaAtual === 1 ? 'disabled' : '' %>">
-                                          <a class="page-link" href="?pagina=1">Primeiro</a>
+                                           <a class="page-link" href="?pagina=1&q=<%= termo %>&ordem=<%= ordem %>&limite=<%= limite %>">Primeiro</a>
                                         </li>
 
                                         <li class="page-item <%= paginaAtual === 1 ? 'disabled' : '' %>">
@@ -96,7 +96,7 @@
                                             </a>
                                         </li>
 
-                                        <% for (let i=1; i <=totalPaginas; i++) { %>
+                                        <% for (let i=1; i <= totalPaginas; i++) { %>
                                             <li class="page-item <%= paginaAtual === i ? 'active' : '' %>">
                                                 <a class="page-link" href="?pagina=<%= i %>&q=<%= termo %>&ordem=<%= ordem %>&limite=<%= limite %>">
                                                     <%= i %>
@@ -104,14 +104,14 @@
                                             </li>
                                         <% } %>
 
-                                            <li class="page-item <%= paginaAtual === totalPaginas ? 'disabled' : '' %>">
-                                                <a class="page-link" href="?pagina=<%= paginaAtual + 1 %>&q=<%= termo %>&ordem=<%= ordem %>&limite=<%= limite %>">Próxima
-                                                </a>
-                                            </li>
+                                        <li class="page-item <%= paginaAtual === totalPaginas ? 'disabled' : '' %>">
+                                            <a class="page-link" href="?pagina=<%= paginaAtual + 1 %>&q=<%= termo %>&ordem=<%= ordem %>&limite=<%= limite %>">Próxima
+                                            </a>
+                                        </li>
 
-                                            <li class="page-item <%= paginaAtual === totalPaginas ? 'disabled' : '' %>">
-                                               <a class="page-link" href="?pagina=<%= totalPaginas %>">Último</a>
-                                            </li>
+                                        <li class="page-item <%= paginaAtual === totalPaginas ? 'disabled' : '' %>">
+                                            <a class="page-link" href="?pagina=<%= totalPaginas %>&q=<%= termo %>&ordem=<%= ordem %>&limite=<%= limite %>">Último</a>
+                                        </li>
                                     </ul>
                                 </nav>
 
