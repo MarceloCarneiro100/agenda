@@ -63,7 +63,7 @@ app.set('view engine', 'ejs');
 
 app.on('pronto', () => {
   app.listen(porta, () => {
-    console.log('Acessar http://localhost:3000');
+    console.log('Acessar http://localhost:3000/login/index');
     console.log(`Aplicação rodando na porta ${porta}`);
   });
 });

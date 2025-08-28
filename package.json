@@ -23,7 +23,9 @@
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "helmet": "^8.1.0",
+    "moment": "^2.30.1",
     "mongoose": "^8.17.1",
+    "pdfmake": "^0.2.20",
     "regenerator-runtime": "^0.14.1",
     "style-loader": "^4.0.0",
     "validator": "^13.15.15"

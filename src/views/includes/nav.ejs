@@ -16,24 +16,44 @@
           </a>
         </li>
 
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="exportDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="exportDropdown">
+            <% const termoSafe=typeof termo !=='undefined' ? termo : '' ; const paginaSafe=typeof paginaAtual
+              !=='undefined' ? paginaAtual : 1; const limiteSafe=typeof limite !=='undefined' ? limite : 5; %>
+              <li>
+                <a class="dropdown-item"
+                  href="/contato/exportar?tipo=pagina<%= termoSafe ? `&q=${termoSafe}` : '' %><%= paginaSafe ? `&pagina=${paginaSafe}` : '' %><%= limiteSafe ? `&limite=${limiteSafe}` : '' %>">
+                  Página atual
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/contato/exportar?tipo=todos">Todos os contatos</a>
+              </li>
+          </ul>
+        </li>
+
         <% if(user) { %>
           <li class="nav-item">
             <a href="/login/logout" class="nav-link"><i class="bi bi-box-arrow-right"></i>
               Sair</a>
           </li>
-          <% } else { %>
+        <% } else { %>
             <li class="nav-item">
               <a href="/login/index" class="nav-link"><i class="bi bi-person-fill"></i>
                 Entrar</a>
             </li>
-            <% } %>
+        <% } %>
       </ul>
     </div>
   </div>
 </nav>
 
 <noscript>
-    <div class="alert-js">
-      Essa aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.
-    </div>
+  <div class="alert-js">
+    Essa aplicação precisa de JavaScript para funcionar corretamente. Por favor, ative o JavaScript no seu navegador.
+  </div>
 </noscript>
