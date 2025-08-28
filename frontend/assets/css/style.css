@@ -41,6 +41,11 @@
     width: 100%;
 }
 
+.tabela {
+  word-break: break-word;
+  white-space: normal;
+}
+
 .table-wrapper .tabela,
 .navegacao,
 .total-contatos {
