@@ -163,33 +163,60 @@ exports.exportar = async (req, res) => {
             Roboto: {
                 normal: path.join(__dirname, '..', 'assets', 'fonts', 'Roboto-Regular.ttf'),
                 bold: path.join(__dirname, '..', 'assets', 'fonts', 'Roboto-Medium.ttf'),
+                italics: path.join(__dirname, '..', 'assets', 'fonts', 'Roboto-Italic.ttf')
             }
         };
 
         const printer = new PdfPrinter(fonts);
 
         const tabelaContatos = contatos.map((contato, index) => [
-            { text: String(index + 1), alignment: 'center', margin: [0, 8, 0, 8] },
-            { text: contato.nome || '', margin: [0, 8, 0, 8] },
-            { text: contato.sobrenome || '', margin: [0, 8, 0, 8] },
-            { text: contato.email || '', margin: [0, 8, 0, 8] },
-            { text: contato.telefone || '', margin: [0, 8, 0, 8] }
+            { text: String(index + 1), alignment: 'center', margin: [0, 2, 0, 2] },
+            { text: contato.nome || '', noWrap: false, margin: [0, 2, 0, 2] },
+            { text: contato.sobrenome || '', noWrap: false, margin: [0, 2, 0, 2] },
+            { text: contato.email || '', noWrap: false, margin: [0, 2, 0, 2] },
+            { text: contato.telefone || '', margin: [0, 2, 0, 2] }
         ]);
+
+        const dataHoraAtual = new Date().toLocaleString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
 
         const docDefinition = {
             content: [
-                { text: termo ? `Agenda de Contatos – Filtro: ${termo}` : 'Agenda de Contatos', style: 'header' },
+                {
+                    image: path.join(__dirname, '..', 'assets', 'img', 'logo.png'),
+                    width: 50,
+                    alignment: 'left',
+                    margin: [0, 0, 0, 10]
+                },
+
+                {
+                    text: termo ? `Agenda de Contatos – Filtro: ${termo}` : 'Agenda de Contatos',
+                    style: 'header',
+                    margin: [0, 0, 0, 10]
+                },
+                {
+                    text: `Gerado em: ${dataHoraAtual}`,
+                    fontSize: 9,
+                    italics: true,
+                    alignment: 'right',
+                    margin: [0, 0, 0, 20]
+                },
                 {
                     table: {
                         headerRows: 1,
-                        widths: ['auto', '*', '*', '*', '*'],
+                        widths: ['auto', '25%', '20%', '30%', '25%'],
                         body: [
                             [
-                                { text: '#', style: 'tableHeader', margin: [0, 8, 0, 8] },
-                                { text: 'Nome', style: 'tableHeader', margin: [0, 8, 0, 8] },
-                                { text: 'Sobrenome', style: 'tableHeader', margin: [0, 8, 0, 8] },
-                                { text: 'Email', style: 'tableHeader', margin: [0, 8, 0, 8] },
-                                { text: 'Telefone', style: 'tableHeader', margin: [0, 8, 0, 8] }
+                                { text: '#', style: 'tableHeader', margin: [0, 2, 0, 2] },
+                                { text: 'Nome', style: 'tableHeader', margin: [0, 2, 0, 2] },
+                                { text: 'Sobrenome', style: 'tableHeader', margin: [0, 2, 0, 2] },
+                                { text: 'Email', style: 'tableHeader', margin: [0, 2, 0, 2] },
+                                { text: 'Telefone', style: 'tableHeader', margin: [0, 2, 0, 2] }
                             ],
                             ...tabelaContatos
                         ]
@@ -199,7 +226,7 @@ exports.exportar = async (req, res) => {
             ],
             styles: {
                 header: {
-                    fontSize: 14,
+                    fontSize: 12,
                     bold: true,
                     alignment: 'center',
                     margin: [0, 0, 0, 20]
@@ -212,8 +239,8 @@ exports.exportar = async (req, res) => {
             },
             defaultStyle: {
                 font: 'Roboto',
-                fontSize: 10,
-                lineHeight: 0.7
+                fontSize: 8,
+                lineHeight: 1.0
             },
             footer: function (currentPage, pageCount) {
                 return {

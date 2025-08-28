@@ -62,10 +62,10 @@
                                 <table class="table my-3 tabela">
                                     <% contatos.forEach(contato=> { %>
                                         <tr>
-                                            <td><%= contato.nome %></td>
-                                            <td><%= contato.sobrenome %></td>
+                                            <td class="text-nowrap"><%= contato.nome %></td>
+                                            <td class="text-nowrap"><%= contato.sobrenome %></td>
                                             <td class="text-nowrap"><%= contato.telefone %></td>
-                                            <td><%= contato.email %></td>
+                                            <td class="text-nowrap"><%= contato.email %></td>
                                             <td class="text-nowrap">
                                                 <a href="/contato/index/<%= contato._id %>">
                                                     <i class="bi bi-pencil"></i> 
