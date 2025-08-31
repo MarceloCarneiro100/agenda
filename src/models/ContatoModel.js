@@ -58,7 +58,8 @@ Contato.prototype.cleanUp = function () {
         sobrenome: this.body.sobrenome,
         email: this.body.email,
         telefone: this.body.telefone,
-        telefoneLimpo: telefoneLimpo
+        telefoneLimpo: telefoneLimpo,
+        userId: this.body.userId
     };
 };
 
@@ -144,5 +145,12 @@ Contato.contarPorTermo = async function (termo, userId) {
 
     return await ContatoModel.countDocuments(query);
 };
+
+
+Contato.apagarTodosPorUsuario = async function (userId) {
+    if (!userId) return;
+    return await ContatoModel.deleteMany({ userId });
+};
+
 
 module.exports = Contato;

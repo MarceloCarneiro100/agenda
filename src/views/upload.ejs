@@ -1,0 +1,38 @@
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
+
+<div class="container my-5">
+  <h2>Importar Contatos via CSV</h2>
+
+  <% if (errors && errors.length > 0) { %>
+    <div class="alert alert-danger">
+      <ul>
+        <% errors.forEach(error => { %>
+          <li><%= error %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <% if (success && success.length > 0) { %>
+    <div class="alert alert-success">
+      <ul>
+        <% success.forEach(msg => { %>
+          <li><%= msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <form action="/contato/importar-csv" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div class="mb-3">
+      <label for="csvFile" class="form-label">Arquivo CSV</label>
+      <input type="file" name="csvFile" id="csvFile" accept=".csv" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Importar</button>
+    <a href="/" class="btn btn-secondary">Voltar</a>
+  </form>
+</div>
+
+<%- include('includes/footer') %>

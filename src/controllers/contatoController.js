@@ -2,6 +2,8 @@ const Contato = require('../models/ContatoModel');
 const PdfPrinter = require('pdfmake');
 const path = require('path');
 const fs = require('fs');
+const csv = require('csv-parser');
+
 
 exports.index = (req, res) => {
     res.render('contato', {
@@ -268,3 +270,117 @@ exports.exportar = async (req, res) => {
         res.status(500).send('Erro interno ao gerar o PDF');
     }
 };
+
+
+exports.importarView = (req, res) => {
+    res.render('upload');
+};
+
+exports.importarCSV = [
+    async (req, res) => {
+        const resultados = [];
+        const erros = [];
+        const userId = req.session.user._id;
+
+        if (!req.file) {
+            req.flash('errors', 'Nenhum arquivo enviado.');
+            return res.redirect('/contato/importar-csv');
+        }
+
+        try {
+            const caminho = path.resolve(req.file.path);
+            let cabecalhoValido = false;
+            let headersRecebidos = false;
+            let erroDetectado = false;
+            let linhaAtual = 1;
+
+            fs.createReadStream(caminho)
+                .pipe(csv())
+                .on('headers', (headers) => {
+                    headersRecebidos = true;
+                    const esperado = ['nome', 'sobrenome', 'email', 'telefone'];
+                    cabecalhoValido = esperado.every(campo => headers.includes(campo));
+                })
+                .on('data', (data) => {
+                    linhaAtual++;
+                    const campos = ['nome', 'sobrenome', 'email', 'telefone'];
+                    const valores = campos.map(campo => data[campo]);
+                    const todosVazios = valores.every(v => typeof v !== 'string' || v.trim() === '');
+
+                    if (todosVazios) {
+                        erros.push(`Linha ${linhaAtual} ignorada: todos os campos estão vazios.`);
+                        return;
+                    }
+
+                    resultados.push(data);
+                })
+                .on('error', (err) => {
+                    erroDetectado = true;
+                    console.error('Erro ao ler CSV:', err);
+                    req.flash('errors', 'Erro ao processar o arquivo CSV. Verifique se ele está corrompido ou mal formatado.');
+                    return res.redirect('/contato/importar-csv');
+                })
+                .on('end', async () => {
+                    fs.unlinkSync(caminho); // remove o arquivo temporário
+
+                    if (!headersRecebidos && !erroDetectado) {
+                        req.flash('errors', 'Arquivo CSV inválido. Nenhum cabeçalho foi detectado.');
+                        return res.redirect('/contato/importar-csv');
+                    }
+
+                    if (!cabecalhoValido) {
+                        req.flash('errors', 'Formato do CSV inválido. Verifique os títulos das colunas: nome, sobrenome, email, telefone.');
+                        return res.redirect('/contato/importar-csv');
+                    }
+
+                    if (resultados.length === 0) {
+                        erros.push('Nenhuma linha válida foi importada.');
+                        req.flash('errors', erros);
+                        return res.redirect('/contato/importar-csv');
+                    }
+
+                    await Contato.apagarTodosPorUsuario(userId);
+
+                    let linhasImportadas = 0;
+
+                    for (const linha of resultados) {
+                        const contato = new Contato({
+                            nome: linha.nome?.trim() || '',
+                            sobrenome: linha.sobrenome?.trim() || '',
+                            email: linha.email?.trim() || '',
+                            telefone: linha.telefone?.trim() || '',
+                            userId: userId
+                        });
+
+                        await contato.register(userId);
+
+                        if (contato.errors.length > 0) {
+                            erros.push(...contato.errors);
+                        } else {
+                            linhasImportadas++;
+                        }
+                    }
+
+                    if (linhasImportadas === 0) {
+                        erros.push('Nenhuma linha foi importada com sucesso.');
+                        req.flash('errors', erros);
+                        return res.redirect('/contato/importar-csv');
+                    }
+
+                    if (erros.length > 0) {
+                        req.flash('errors', erros);
+                        req.flash('success', `${linhasImportadas} contato(s) importado(s) com sucesso, mas houve ${erros.length} erro(s).`);
+                        return res.redirect('/contato/importar-csv');
+                    } else {
+                        req.flash('success', `${linhasImportadas} contato(s) importado(s) com sucesso!`);
+                        return res.redirect('/contato/importar-csv');
+                    }
+                });
+
+        } catch (e) {
+            console.error('Erro ao importar CSV:', e);
+            req.flash('errors', 'Erro interno ao processar o arquivo.');
+            return res.redirect('/contato/importar-csv');
+        }
+    }
+];

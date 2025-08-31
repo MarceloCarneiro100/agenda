@@ -16,9 +16,9 @@ const routes = require('./routes');
 const path = require('path');
 
 const helmet = require('helmet');
-const csrf = require('csurf');
 
-const { middlewareGlobal, checkCsrfError, csrfMiddleware, setContentSecurityPolicy } = require('./src/middlewares/middleware');
+
+const { middlewareGlobal, checkCsrfError, setContentSecurityPolicy } = require('./src/middlewares/middleware');
 const porta = 3000;
 
 app.use(helmet({
@@ -47,15 +47,14 @@ const sessionOptions = session({
 
 app.use(sessionOptions);
 app.use(flash());
-app.use(csrf());
+
 
 // Nossos próprios middlewares
-app.use(checkCsrfError);
-app.use(csrfMiddleware);
 app.use(middlewareGlobal);
 
 // Permite que o Express use as rotas
 app.use(routes);
+app.use(checkCsrfError);
 
 // Configuração da view (diretório e engine)
 app.set('views', path.resolve(__dirname, 'src', 'views'));
