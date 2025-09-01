@@ -3,6 +3,7 @@ const PdfPrinter = require('pdfmake');
 const path = require('path');
 const fs = require('fs');
 const csv = require('csv-parser');
+const { writeToString } = require('@fast-csv/format');
 
 
 exports.index = (req, res) => {
@@ -384,3 +385,46 @@ exports.importarCSV = [
         }
     }
 ];
+
+exports.exportarCSV = async (req, res) => {
+    try {
+        const userId = req.session.user._id;
+        const contatos = await Contato.buscaContatosPorUsuario(userId);
+
+        contatos.sort((a, b) => {
+            const nomeA = a.nome?.toLowerCase() || '';
+            const nomeB = b.nome?.toLowerCase() || '';
+            return nomeA.localeCompare(nomeB);
+        });
+
+        if (!contatos || contatos.length === 0) {
+            return res.status(204).send();
+        }
+
+        const dados = contatos.map(c => ({
+            nome: c.nome || '',
+            sobrenome: c.sobrenome || '',
+            email: c.email || '',
+            telefone: c.telefone || ''
+        }));
+
+        writeToString(dados, {
+            headers: true,
+            quoteColumns: true,
+            quoteHeaders: true
+        })
+        .then(csv => {
+            res.header('Content-Type', 'text/csv');
+            res.attachment('contatos.csv');
+            res.send(csv);
+        })
+        .catch(err => {
+            console.error('Erro ao gerar CSV:', err);
+            res.status(500).send('Erro ao gerar CSV');
+        });
+
+    } catch (error) {
+        console.error('Erro ao exportar contatos:', error);
+        res.status(500).send('Erro interno');
+    }
+};
