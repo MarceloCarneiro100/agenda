@@ -1,0 +1,26 @@
+<div class="modal fade" id="modalDeleteTodos" tabindex="-1" aria-labelledby="modalDeleteTodosLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalDeleteTodosLabel">Apagar Todos os Contatos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <% if (totalContatos===0) { %>
+                    Você não possui contatos para apagar.
+                    <% } else { %>
+                        Tem certeza que deseja apagar <strong>todos</strong> os contatos? Essa ação não pode ser
+                        desfeita.
+                        <% } %>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <% if (totalContatos===0) { %>
+                    <a href="#" class="btn btn-danger disabled">Apagar Tudo</a>
+                    <% } else { %>
+                        <a href="/contato/delete-todos" class="btn btn-danger">Apagar Tudo</a>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+</div>

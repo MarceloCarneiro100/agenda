@@ -48,6 +48,12 @@
           </a>
         </li>
 
+        <% if (typeof totalContatos !=='undefined' && totalContatos> 0) { %>
+          <a href="#" class="nav-link text-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteTodos">
+            <i class="bi bi-trash-fill"></i> Apagar Todos
+          </a>
+        <% } %>
+
 
         <% if (typeof user !=='undefined' && user) { %>
           <li class="nav-item">
@@ -59,7 +65,8 @@
               <a href="/login/index" class="nav-link"><i class="bi bi-person-fill"></i>
                 Entrar</a>
             </li>
-            <% } %>
+        <% } %>
+        
       </ul>
     </div>
   </div>

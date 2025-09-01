@@ -27,6 +27,6 @@ route.get('/contato/exportar', loginRequired, contatoController.exportar);
 route.get('/contato/importar-csv', loginRequired, csrfMiddleware, contatoController.importarView);
 route.post('/contato/importar-csv', loginRequired, upload.single('csvFile'), contatoController.importarCSV);
 route.get('/contato/exportar-csv', loginRequired, contatoController.exportarCSV);
-
+route.get('/contato/delete-todos', loginRequired, contatoController.deleteTodos);
 
 module.exports = route;

@@ -1,5 +1,5 @@
 <%- include('includes/head') %>
-<%- include('includes/nav') %>
+<%- include('includes/nav', { totalContatos }) %>
         <div class="container">
             <div class="row">
                 <div class="col-lg-2"></div>
@@ -131,4 +131,5 @@
             </div>
         </div>
 <%- include('includes/modalDelete') %>
+<%- include('includes/modalDeleteTodos', { totalContatos }) %>
 <%- include('includes/footer') %>

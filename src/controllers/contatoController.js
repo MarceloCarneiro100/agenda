@@ -413,18 +413,30 @@ exports.exportarCSV = async (req, res) => {
             quoteColumns: true,
             quoteHeaders: true
         })
-        .then(csv => {
-            res.header('Content-Type', 'text/csv');
-            res.attachment('contatos.csv');
-            res.send(csv);
-        })
-        .catch(err => {
-            console.error('Erro ao gerar CSV:', err);
-            res.status(500).send('Erro ao gerar CSV');
-        });
+            .then(csv => {
+                res.header('Content-Type', 'text/csv');
+                res.attachment('contatos.csv');
+                res.send(csv);
+            })
+            .catch(err => {
+                console.error('Erro ao gerar CSV:', err);
+                res.status(500).send('Erro ao gerar CSV');
+            });
 
     } catch (error) {
         console.error('Erro ao exportar contatos:', error);
         res.status(500).send('Erro interno');
+    }
+};
+
+exports.deleteTodos = async function (req, res) {
+    try {
+        await Contato.apagarTodosPorUsuario(req.session.user._id);
+        req.flash('success', 'Todos os contatos foram apagados com sucesso.');
+        req.session.save(() => res.redirect('/'));
+    } catch (e) {
+        console.error('Erro ao apagar todos os contatos:', e);
+        req.flash('errors', 'Erro ao apagar os contatos.');
+        req.session.save(() => res.redirect('/'));
     }
 };
