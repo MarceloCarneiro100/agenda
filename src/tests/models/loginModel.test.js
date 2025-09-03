@@ -32,6 +32,11 @@ describe('LoginModel - login()', () => {
     });
 
     it('deve falhar com senha errada', async () => {
+        // Registra o usuário com a senha correta
+        const usuario = new Login({ email: 'teste@teste.com', password: '123456' });
+        await usuario.register();
+
+        // Tenta logar com a senha errada
         const login = new Login({ email: 'teste@teste.com', password: 'errada' });
         await login.login();
 

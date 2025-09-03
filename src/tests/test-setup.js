@@ -8,10 +8,12 @@ beforeAll(async () => {
     const uri = mongoServer.getUri();
 
     await mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
         dbName: 'jest',
     });
+});
+
+beforeEach(async () => {
+    await mongoose.connection.db.dropDatabase();
 });
 
 afterAll(async () => {

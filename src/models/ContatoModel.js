@@ -51,7 +51,10 @@ Contato.prototype.cleanUp = function () {
         }
     }
 
-    const telefoneLimpo = this.body.telefone.replace(/\D/g, '');
+    const telefoneLimpo = typeof this.body.telefone === 'string'
+        ? this.body.telefone.replace(/\D/g, '')
+        : '';
+
 
     this.body = {
         nome: this.body.nome,
