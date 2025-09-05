@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "set NODE_ENV=test&& jest",
     "start": "nodemon server.js --ignore public --ignore frontend",
     "dev": "webpack -w"
   },

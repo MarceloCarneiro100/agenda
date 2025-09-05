@@ -73,6 +73,8 @@ class Login {
     }
 
     cleanUp() {
+        if (typeof this.body !== 'object') this.body = {};
+
         for (const key in this.body) {
             if (typeof this.body[key] !== 'string') {
                 this.body[key] = '';
@@ -80,8 +82,8 @@ class Login {
         }
 
         this.body = {
-            email: this.body.email,
-            password: this.body.password
+            email: this.body.email || '',
+            password: this.body.password || ''
         }
     }
 }
