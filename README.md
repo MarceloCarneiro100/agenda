@@ -1,4 +1,3 @@
-
 # 📒 Projeto Agenda - Node.js + Express + MongoDB
 
 Aplicação web de agenda de contatos, desenvolvida com Node.js, Express, MongoDB e EJS. Permite que usuários autenticados possam cadastrar, editar, visualizar, importar e exportar contatos.
@@ -19,10 +18,50 @@ Aplicação web de agenda de contatos, desenvolvida com Node.js, Express, MongoD
 - ⚠️ Validação de dados (nome obrigatório, e-mail válido, pelo menos um meio de contato)  
 - 🔒 Proteção de rotas com middleware de autenticação  
 - 💬 Mensagens de erro e sucesso com `connect-flash`  
-- 🛡️ CSRF protection  
+- 🛡️ Proteção contra CSRF  
 
 ---
 
+## 🖼️ Interface do Usuário 
+
+### 🔐 Tela de Login
+Mostra o formulário de cadastro e autenticação.
+
+
+![Tela de Login](./screenshots/login.jpg)
+
+### 👋 Página de Boas-Vindas (Dashboard)
+Tela exibida após o login, com saudação ao usuário e acesso às funcionalidades principais.
+
+
+![Dashboard](./screenshots/dashboard.jpg)
+
+### 📝 Cadastro de Contato
+Formulário que permite adicionar novo contato ou editar com nome, sobrenome, e-mail e telefone.
+
+
+![Cadastro de Contato](./screenshots/cadastro-contato.jpg)
+
+### 📋 Lista de Contatos
+Visualização dos contatos cadastrados com opções de edição, exclusão e ordenação.
+
+
+![Lista de Contatos](./screenshots/lista-contatos.jpg)
+
+### 🗑️ Apagar Todos os Contatos
+Funcionalidade que permite excluir todos os contatos de uma vez, com confirmação de segurança.
+
+
+![Apagar Todos](./screenshots/apagar-todos.jpg)
+
+### 📥 Upload de Arquivo CSV
+Funcionalidade que permite importar contatos em massa através de um arquivo CSV, com validação automática dos dados.
+
+
+![Upload CSV](./screenshots/upload-csv.jpg)
+
+
+---
 
 ## 🧱 Estrutura do Projeto
 
@@ -64,9 +103,7 @@ AGENDA/
 ├── routes.js                          # Definição das rotas da aplicação
 ├── server.js                          # Inicialização do servidor e conexão com MongoDB
 └── webpack.config.js                  # Configuração do Webpack
-
 ```
-
 
 ---
 
@@ -93,9 +130,27 @@ Crie um arquivo `.env` na raiz do projeto e substitua os campos:
 - `<cluster>`: nome do cluster (ex: `cluster0`)  
 - `<nome-do-banco>`: nome do banco (ex: `agenda`)  
 
+---
+
+## ▶️ Executando o Projeto
+
+### 🔧 Modo de Produção (somente backend)
+
 ```bash
-# 4. Execute o projeto
 npm start
+```
+
+### 🧪 Modo de Desenvolvimento (backend + frontend)
+
+> Recomendado para testes e desenvolvimento local.  
+> Execute os dois comandos em terminais separados:
+
+```bash
+# Terminal 1: inicia o servidor com nodemon
+npm start
+
+# Terminal 2: recompila os arquivos JS do frontend em tempo real
+npm run dev
 ```
 
 Acesse no navegador:  
@@ -200,18 +255,18 @@ npx jest src/tests/integration/loginController.test.js
 | Jest       | Testes unitários       |
 | Supertest  | Testes de integração   |
 
-
 ---
 
 ## 🌐 Outros idiomas
 
 - 🇺🇸 [English Version](README.en.md)
 
-
+---
 
 ## ✍️ Autor
 
-Este projeto foi desenvolvido por Marcelo Carneiro Marques com base nas aulas do curso "Curso de Javascript e Typescript  do básico ao avançado JS/TS" disponível na Udemy, ministrado pelo instrutor Luiz Otávio Miranda.
+Este projeto foi desenvolvido por Marcelo Carneiro Marques com base nas aulas do curso "Curso de Javascript e Typescript do básico ao avançado JS/TS" disponível na Udemy, ministrado pelo instrutor Luiz Otávio Miranda.  
 Muitas partes foram aprimoradas com inclusão de novas funcionalidades para fins de aprendizado e melhoria da estrutura original.
+
 
 
